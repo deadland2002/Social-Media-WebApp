@@ -22,8 +22,8 @@
                 </div>
                 <div class="mid-nav-wrapper">
                     <div class="mid-nav">
-                        <img src="/img/logout.png" class="log-out-icon" width="20px" onclick="logout()">
-                        <img src="/img/remove-account.png" class="delete-acc-icon" width="20px" onclick="delaccount()">
+                        <img src="/img/logout.png" class="log-out-icon" width="20px" onclick="logout()" style="cursor: pointer;">
+                        <a href="/deleteaccount"><img src="/img/remove-account.png" class="delete-acc-icon" width="20px" onclick="delaccount()"></a>
                         <a href="/dev"><img src="/img/add.png" class="add-post-icon" width="20px"></a>
                         <a href="/findfriend"><img src="/img/search.png" class="search-icon" width="20px"></a>
                     </div>
@@ -47,7 +47,9 @@
 
         </div>
         <div class="view-post">
+            <% if(posts.length >=1){ %>
             <ul id="list_view">
+            
                 <% for (var i=0 ; i < posts.length ; i++){ %>
                     <li>
                         <div class="card">
@@ -84,7 +86,13 @@
                         </div>
                     </li>
                     <% } %>
-            </ul>
+                </ul>
+            <% } else {%>
+                <div class="no-post">
+                    OHHH HOOOO 🥲, Looks like there are no posts
+                    try creating one <a href="/dev">Click_ME 👈</a> to create post
+                </div>
+            <% } %>
         </div>
     </div>
 

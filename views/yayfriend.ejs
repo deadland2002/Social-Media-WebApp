@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yay</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <div class="yay-bg">
+        <div class="yay-top">
+            <div class="yay-top-wrap">
+                Yay !! 👏🎉 , You got 5 points for adding a new friend
+                <br>
+                keep adding friends to earn more points.
+            </div>
+        </div>
+        <div class="yay-bottom">
+            <img src="/img/coin.png" alt="">
+        </div>
+    </div>
+
+    <script>
+        const username = localStorage.getItem('User');
+        const password = localStorage.getItem('Password');
+
+        function makeid(length) {
+            var result = '';
+            var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for (var i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+
+        setTimeout(function () { location.href = "/account/" + makeid(10) + "/" + username + "/" + makeid(10) + "/" + password }, 5000);
+    </script>
+    
+</body>
+</html>

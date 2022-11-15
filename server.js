@@ -25,7 +25,7 @@ const key = process.env.KEY
 const url = process.env.URL
 const databaseurl = process.env.DATABASE
 
-mongoose.connect(databaseurl)
+mongoose.connect(databaseurl).then(()=>{console.log("MongoDB connected")});
 
 const app = express()
 
@@ -64,10 +64,19 @@ function nFormatter(num, digits) {
 
 
 
+
 app.get("/", function (req, res) {
     res.render("home")
 })
 
+
+
+
+
+
+app.get("/yayfriend", function (req, res) {
+    res.render("yayfriend")
+})
 
 
 
@@ -78,6 +87,23 @@ app.get("/", function (req, res) {
 
 app.get("/signup", function (req, res) {
     res.render("signup")
+})
+
+
+
+
+
+
+app.get("/deleteaccount", function (req, res) {
+    res.render("delete")
+})
+
+
+
+
+
+app.get("/findfriend", function (req, res) {
+    res.render("findfriend")
 })
 
 
@@ -184,9 +210,11 @@ app.post("/api/signup", async function (req, res) {
 
     try {
 
-        const result = await User.findOne({ username }).lean();
+        const result = await User.findOne({ "username":username}).lean();
+        const con = await User.findOne({ "contact":number}).lean();
+        
 
-        if (!result) {
+        if (!result && !con) {
             const response = await User.create({
                 "username": username,
                 "password": password,
@@ -196,7 +224,6 @@ app.post("/api/signup", async function (req, res) {
             console.log("User Created");
         }
         else {
-            console.log(result);
             status_msg = "Duplicate User";
             err_msg = "11000";
             console.log(JSON.stringify(err));
@@ -206,7 +233,7 @@ app.post("/api/signup", async function (req, res) {
         if (err.code === 11000) {
             status_msg = "Duplicate User";
             err_msg = "11000";
-            console.log(JSON.stringify(err));
+            // console.log(JSON.stringify(err));
         }
         else {
             console.log(JSON.stringify(err));
@@ -257,6 +284,40 @@ app.post("/api/signin", async function (req, res) {
 
 
 
+app.post("/api/deleteaccount", async function (req, res) {
+    // console.log(req.body);
+    const { username, password } = req.body;
+
+    try {
+        const response = await User.findOne({ username }).lean();
+
+        if (!response) {
+            console.log("invalid username");
+            return res.json({ status: 'error', error: "Invalid Username / Password" });
+        }
+        else if (password == response.password) {
+
+            const result = await User.deleteOne({ username }).lean();
+
+            return res.json({ status: 'OK'});
+        }
+        else {
+            console.log("org pass : ", password);
+            console.log(response.password);
+        }
+    }
+    catch (err) {
+        console.log(err);
+    }
+
+
+    return res.json({ status: 'error', error: "Invalid Username / Password" });
+})
+
+
+
+
+
 
 
 
@@ -278,6 +339,46 @@ app.post("/api/info", async function (req, res) {
         else {
             console.log("org pass : ", password);
             console.log(response.password);
+        }
+    }
+    catch (err) {
+        console.log(err);
+    }
+
+
+    return res.json({ status: 'error', error: "Invalid Username / Password" });
+})
+
+
+
+
+
+
+app.post("/api/findfriend", async function (req, res) {
+    // console.log(req.body);
+    const { username , friend } = req.body;
+
+    try {
+        const response = await User.findOne({ "username":friend}).lean()
+
+        if (!response) {
+            console.log("invalid username");
+            return res.json({ status: 'error', error: "User Not Found" });
+        }
+        else if(username==friend){
+            return res.json({ status: 'error', error: "User same as friend" });
+        }
+        else {
+            const confirm = await User.findOne({username,'friends':{ $elemMatch:{'name':friend} } } ).lean();
+            if(!confirm){
+                // console.log(response);
+                const result = await User.updateOne({ username },{$push:{"friends":{"name":friend}}}).lean();
+                return res.json({ status: 'OK' });
+            }
+            else{
+                // console.log(confirm);
+                return res.json({ status: 'error', error: "Already Friends with user" });
+            }
         }
     }
     catch (err) {

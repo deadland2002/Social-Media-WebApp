@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
-    password: { type: String, required: true, unique: true },
+    password: { type: String, required: true},
     contact: {type:Number, required:true, unique:true},
     coins: {type:Number,"default":0},
     posts : [{
@@ -12,8 +12,7 @@ const UserSchema = new mongoose.Schema({
         comment: {type : Array , "default" : [] }
     }],
     friends : [{
-        name: {type: String,"default" : ""},
-        id: {type: String,"default" : ""}
+        name: {type: String}
     }]
 }, { collection: 'users' })
 
