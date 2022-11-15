@@ -34,6 +34,14 @@
             const form = document.getElementById('reg-form');
             const username = localStorage.getItem('User');
 
+            document.onreadystatechange = function () {
+                if (document.readyState !== "complete") {
+                    document.querySelector("body").style.visibility = "hidden";
+                } else {
+                    document.querySelector("body").style.visibility = "visible";
+                }
+            };
+
             // if(username!=null){
             //     location.href = "/account";
             // }
@@ -101,7 +109,8 @@
                     submit_btn.style.backgroundColor = "rgb(0, 255, 34)";
                     localStorage.setItem("token", obj.data);
                     localStorage.setItem("User", username);
-                    setTimeout(function () { location.href = "/account/" + makeid(10) +"/" + username + "/" + makeid(10) + "/" + password }, 1000);
+                    localStorage.setItem("Password", password);
+                    setTimeout(function () { location.href = "/account/" + makeid(10) + "/" + username + "/" + makeid(10) + "/" + password }, 1000);
                 }
                 else {
                     submit_btn.style.backgroundColor = "rgb(255, 0, 0)";

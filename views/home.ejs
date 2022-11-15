@@ -30,6 +30,13 @@
     </section>
 
     <script>
+        const username = localStorage.getItem('User');
+        const password = localStorage.getItem('Password');
+
+        if(username!==null && password!==null ){
+            alert('Previous User Found , Signing In');
+            location.href = location.href = "/account/8qxywe87qtbwx87etx89qb7we/" + username + "/81yb8qxb87btqw97e8xqiw/" + password;
+        }
 
         function signin() {
             location.href = "/signin";

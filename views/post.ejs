@@ -36,6 +36,18 @@
         const token = localStorage.getItem('token');
         const form = document.getElementById('form');
 
+
+        document.onreadystatechange = function () {
+            if (document.readyState !== "complete") {
+                document.querySelector("body").style.visibility = "hidden";
+            } else {
+                document.querySelector("body").style.visibility = "visible";
+            }
+        };
+
+
+
+
         form.addEventListener('submit', submit);
 
         if (token != null && username != null) {
@@ -89,9 +101,7 @@
             if (obj.status === 'OK') {
                 submit_btn.innerText = "Created";
                 submit_btn.style.backgroundColor = "rgb(0, 255, 34)";
-                localStorage.setItem("token", obj.data);
-                localStorage.setItem("User", username);
-                setTimeout(function () { location.href = "/account/" + makeid(10) + "/" + username + "/" + makeid(10) + "/" + obj.password }, 1000);
+                setTimeout(function () { location.href = "/yay"}, 1000);
             }
             else {
                 submit_btn.style.backgroundColor = "rgb(255, 0, 0)";

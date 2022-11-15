@@ -84,6 +84,14 @@ app.get("/signup", function (req, res) {
 
 
 
+app.get("/yay", function (req, res) {
+    res.render("yay")
+})
+
+
+
+
+
 
 
 
