@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <section class="home-main">
+        <div class="header-home-left">
+            <div class="left-box" onclick="signin()">
+                <div class="top-left">
+                    Sign In
+                </div>
+            </div>
+        </div>
+
+        <div class="header-home-right">
+            <div class="right-box" onclick="signup()">
+                <div class="top-right">
+                    Sign Up
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+
+        function signin() {
+            location.href = "/signin";
+        }
+
+        function signup() {
+            location.href = "/signup";
+        }
+
+    </script>
+</body>
+
+</html>
